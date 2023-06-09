@@ -6,7 +6,7 @@ class HelperFunctions {
   static String userNameKey = "USERNAMEKEY";
   static String userEmailKey = "USEREMAILKEY";
 
-// saving the data to SF
+// saving the data to Shared preferences SF
 
 // getting the data from SF
 

@@ -1,3 +1,4 @@
+import 'package:chatapp_firebase/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -20,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
+              children: <Widget>[
                 Text(
                   "Messenger",
                   style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
@@ -31,7 +32,13 @@ class _LoginPageState extends State<LoginPage> {
                 Text('Login to see what they are talking about'),
                 Image.asset("assets/login.png"),
                 TextField(
-                  decoration: InputDecoration(hintText: "first name"),
+                  decoration: textInputDecoration.copyWith(
+                    labelText: 'email',
+                    prefixIcon: Icon(
+                      Icons.email,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
                 ),
                 Text("data")
               ],
