@@ -50,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
                   onChanged: (value) {
                     setState(() {
                       email = value;
-                      print(email);
+                      //               print(email);
                     });
                   },
                   validator: (value) {
@@ -81,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                   onChanged: (values) {
                     setState(() {
                       password = values;
-                      //       print(password);
+                      //  print(password);
                     });
                   },
                 ),
@@ -113,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                         style: TextStyle(decoration: TextDecoration.underline),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            nextScreen(context, RegisterPage());
+                            nextScreen(context, const RegisterPage());
                           },
                       )
                     ]))
