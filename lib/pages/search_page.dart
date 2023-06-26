@@ -1,5 +1,7 @@
 import 'package:chatapp_firebase/helper/helper_function.dart';
+import 'package:chatapp_firebase/pages/chat_page.dart';
 import 'package:chatapp_firebase/service/database_service.dart';
+import 'package:chatapp_firebase/widgets/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -166,6 +168,57 @@ class _SearchPageState extends State<SearchPage> {
         style: const TextStyle(fontWeight: FontWeight.w600),
       ),
       subtitle: Text('Admin: ${getName(admin)}'),
+      trailing: InkWell(
+          onTap: () async {
+            await DatabaseService(uid: user!.uid)
+                .toggleGroupJoin(groupId, userName, groupName);
+            if (isJoined) {
+              setState(() {
+                isJoined = !isJoined;
+              });
+              showSnackbar(
+                  context, Colors.green, "Sucessfully joined the group.");
+              Future.delayed(const Duration(seconds: 2), () {
+                nextScreen(
+                    context,
+                    ChatPage(
+                        groupId: groupId,
+                        groupName: groupName,
+                        userName: userName));
+              });
+            } else {
+              setState(() {
+                isJoined = !isJoined;
+                showSnackbar(context, Colors.red, "Left the group $groupName");
+              });
+            }
+          },
+          child: isJoined
+              ? Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.black,
+                    border: Border.all(color: Colors.white, width: 1),
+                  ),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: const Text(
+                    "Joined",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                )
+              : Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: const Text(
+                    "Join",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                )),
     );
   }
 }
