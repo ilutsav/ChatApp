@@ -1,3 +1,7 @@
+import 'package:chatapp_firebase/helper/helper_function.dart';
+import 'package:chatapp_firebase/service/database_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SearchPage extends StatefulWidget {
@@ -9,6 +13,36 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   TextEditingController searchController = TextEditingController();
+  bool isLoading = false;
+  QuerySnapshot? searchSnapshot;
+  bool hasUserSearched = false;
+  String userName = "";
+  bool isJoined = false;
+  User? user;
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentUserIdAndName();
+  }
+
+  String getName(String r) {
+    return r.substring(r.indexOf("_") + 1);
+  }
+
+  String getId(String res) {
+    return res.substring(0, res.indexOf("_"));
+  }
+
+  getCurrentUserIdAndName() async {
+    await HelperFunctions.getUserNameFromSF().then((value) {
+      setState(() {
+        userName = value!;
+      });
+    });
+    user = FirebaseAuth.instance.currentUser;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,11 +91,81 @@ class _SearchPageState extends State<SearchPage> {
                 ),
               ],
             ),
-          )
+          ),
+          isLoading
+              ? Center(
+                  child: CircularProgressIndicator(
+                    color: Theme.of(context).primaryColor,
+                  ),
+                )
+              : groupList(),
         ],
       ),
     );
   }
 
-  initiateSearchMethod() {}
+  initiateSearchMethod() async {
+    if (searchController.text.isNotEmpty) {
+      setState(() {
+        isLoading = true;
+      });
+      await DatabaseService()
+          .searchByName(searchController.text)
+          .then((snapshot) {
+        setState(() {
+          searchSnapshot = snapshot;
+          isLoading = false;
+          hasUserSearched = true;
+        });
+      });
+    }
+  }
+
+  groupList() {
+    return hasUserSearched
+        ? ListView.builder(
+            shrinkWrap: true,
+            itemCount: searchSnapshot!.docs.length,
+            itemBuilder: (context, index) {
+              return groupTile(
+                userName,
+                searchSnapshot!.docs[index]['groupId'],
+                searchSnapshot!.docs[index]['groupName'],
+                searchSnapshot!.docs[index]['admin'],
+              );
+            },
+          )
+        : Container();
+  }
+
+  joinedOrNot(
+      String userName, String groupId, String groupName, String admin) async {
+    await DatabaseService(uid: user!.uid)
+        .isUserJoined(groupName, groupId, userName)
+        .then((value) {
+      isJoined = value;
+    });
+  }
+
+  Widget groupTile(
+      String userName, String groupId, String groupName, String admin) {
+    // function to check whether user already exists in group
+    joinedOrNot(userName, groupId, groupName, admin);
+    return ListTile(
+      contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      leading: CircleAvatar(
+        radius: 30,
+        backgroundColor: Theme.of(context).primaryColor,
+        child: Text(
+          groupName.substring(0, 1).toUpperCase(),
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+      title: Text(
+        groupName,
+        style: const TextStyle(fontWeight: FontWeight.w600),
+      ),
+      subtitle: Text('Admin: ${getName(admin)}'),
+    );
+  }
 }
