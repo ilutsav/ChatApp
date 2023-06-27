@@ -1,3 +1,5 @@
+//import 'dart:html';
+
 import 'package:chatapp_firebase/pages/group_info.dart';
 import 'package:chatapp_firebase/service/database_service.dart';
 import 'package:chatapp_firebase/widgets/widgets.dart';
@@ -20,6 +22,7 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   Stream<QuerySnapshot>? chats;
+  TextEditingController messageController = TextEditingController();
   String admin = "";
 
   @override
@@ -63,6 +66,52 @@ class _ChatPageState extends State<ChatPage> {
               icon: Icon(Icons.info))
         ],
       ),
+      body: Stack(
+        children: <Widget>[
+          //chat messages here
+          //chatMessages(),
+          Container(
+            alignment: Alignment.bottomCenter,
+            width: MediaQuery.of(context).size.width,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+              width: MediaQuery.of(context).size.width,
+              color: Colors.grey,
+              child: Row(
+                children: [
+                  Expanded(
+                      child: TextFormField(
+                    controller: messageController,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      hintText: "send a message...",
+                      hintStyle: TextStyle(color: Colors.white, fontSize: 16),
+                      border: InputBorder.none,
+                    ),
+                  )),
+                  const SizedBox(width: 12),
+                  Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      borderRadius: BorderRadius.circular(40),
+                    ),
+                    child: const Center(
+                      child: Icon(
+                        Icons.send,
+                        color: Colors.white,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
+
+  chatMessages() {}
 }
