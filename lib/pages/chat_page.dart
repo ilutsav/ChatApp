@@ -2,6 +2,7 @@
 
 import 'package:chatapp_firebase/pages/group_info.dart';
 import 'package:chatapp_firebase/service/database_service.dart';
+import 'package:chatapp_firebase/widgets/message_tile.dart';
 import 'package:chatapp_firebase/widgets/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -69,7 +70,7 @@ class _ChatPageState extends State<ChatPage> {
       body: Stack(
         children: <Widget>[
           //chat messages here
-          //chatMessages(),
+          chatMessages(),
           Container(
             alignment: Alignment.bottomCenter,
             width: MediaQuery.of(context).size.width,
@@ -90,17 +91,22 @@ class _ChatPageState extends State<ChatPage> {
                     ),
                   )),
                   const SizedBox(width: 12),
-                  Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.circular(40),
-                    ),
-                    child: const Center(
-                      child: Icon(
-                        Icons.send,
-                        color: Colors.white,
+                  GestureDetector(
+                    onTap: () {
+                      sendMessage();
+                    },
+                    child: Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.circular(40),
+                      ),
+                      child: const Center(
+                        child: Icon(
+                          Icons.send,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   )
@@ -113,5 +119,37 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-  chatMessages() {}
+  chatMessages() {
+    return StreamBuilder(
+        stream: chats,
+        builder: (context, AsyncSnapshot snapshot) {
+          return snapshot.hasData
+              ? ListView.builder(
+                  itemCount: snapshot.data.docs.length,
+                  itemBuilder: (context, index) {
+                    return MessageTile(
+                        message: snapshot.data.docs[index]['message'],
+                        sender: snapshot.data.docs[index]['sender'],
+                        sendByMe: widget.userName ==
+                            snapshot.data.docs[index]['sender']);
+                  },
+                )
+              : Container();
+        });
+  }
+
+  sendMessage() {
+    if (messageController.text.isNotEmpty) {
+      Map<String, dynamic> chatMessageMap = {
+        "message": messageController.text,
+        "sender": widget.userName,
+        "time": DateTime.now().microsecondsSinceEpoch,
+      };
+
+      DatabaseService().sendMesssage(widget.groupId, chatMessageMap);
+      setState(() {
+        messageController.clear();
+      });
+    }
+  }
 }
