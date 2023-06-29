@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:chatapp_firebase/auth/register_page.dart';
 import 'package:chatapp_firebase/helper/helper_function.dart';
@@ -53,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(
                         height: 10,
                       ),
-                      Text('Login to see what they are talking about'),
+                      const Text('Login to see what they are talking about'),
                       Image.asset("assets/login.png"),
                       TextFormField(
                         decoration: textInputDecoration.copyWith(
@@ -106,14 +105,14 @@ class _LoginPageState extends State<LoginPage> {
                         width: double.infinity,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              primary: Theme.of(context).primaryColor,
+                              backgroundColor: Theme.of(context).primaryColor,
                               elevation: 0,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20))),
                           onPressed: () {
                             login();
                           },
-                          child: Text(
+                          child: const Text(
                             'Log In',
                             style: TextStyle(color: Colors.white, fontSize: 16),
                           ),
@@ -122,11 +121,11 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(height: 10),
                       Text.rich(TextSpan(
                           text: "Don't have an account? ",
-                          style: TextStyle(fontSize: 14),
+                          style: const TextStyle(fontSize: 14),
                           children: <TextSpan>[
                             TextSpan(
                               text: "Register here.",
-                              style: TextStyle(
+                              style: const TextStyle(
                                   decoration: TextDecoration.underline),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
@@ -158,7 +157,7 @@ class _LoginPageState extends State<LoginPage> {
           await HelperFunctions.saveUserLoggedInStatus(true);
           await HelperFunctions.saveUserEmailSF(email);
           await HelperFunctions.saveUserNameSF(snapshot.docs[0]['fullName']);
-          nextScreenReplace(context, HomePage());
+          nextScreenReplace(context, const HomePage());
         } else {
           showSnackbar(context, Colors.red, value);
           setState(() {

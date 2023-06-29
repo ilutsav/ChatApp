@@ -12,10 +12,7 @@ class AuthService {
       User user = (await firebaseAuth.signInWithEmailAndPassword(
               email: email, password: password))
           .user!;
-      if (user != null) {
-        return true;
-      }
-      ;
+      return true;
     } on FirebaseAuthException catch (e) {
       return e.message;
     }
@@ -28,13 +25,9 @@ class AuthService {
       User user = (await firebaseAuth.createUserWithEmailAndPassword(
               email: email, password: password))
           .user!;
-      if (user != null) {
-        // call our database service to update the user data.
-        await DatabaseService(uid: user.uid).savingUserData(fullName, email);
+      await DatabaseService(uid: user.uid).savingUserData(fullName, email);
 
-        return true;
-      }
-      ;
+      return true;
     } on FirebaseAuthException catch (e) {
       return e.message;
     }

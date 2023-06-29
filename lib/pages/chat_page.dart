@@ -64,7 +64,7 @@ class _ChatPageState extends State<ChatPage> {
                       groupName: widget.groupName,
                     ));
               },
-              icon: Icon(Icons.info))
+              icon: const Icon(Icons.info))
         ],
       ),
       body: Stack(
@@ -84,7 +84,7 @@ class _ChatPageState extends State<ChatPage> {
                       child: TextFormField(
                     controller: messageController,
                     style: const TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: "send a message...",
                       hintStyle: TextStyle(color: Colors.white, fontSize: 16),
                       border: InputBorder.none,

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
 class DatabaseService {
   final String? uid;
@@ -109,19 +108,19 @@ class DatabaseService {
     List<dynamic> groups = await documentSnapshot['groups'];
 
     // if user has our groups  --> then remove them or also in other part rejoin them
-    if (groups.contains("${groupId}_${groupName}")) {
+    if (groups.contains("${groupId}_$groupName")) {
       await userDocumentReference.update({
-        "groups": FieldValue.arrayRemove(["${groupId}_${groupName}"])
+        "groups": FieldValue.arrayRemove(["${groupId}_$groupName"])
       });
       await groupDocumentReference.update({
-        "members": FieldValue.arrayRemove(["${uid}_${userName}"])
+        "members": FieldValue.arrayRemove(["${uid}_$userName"])
       });
     } else {
       await userDocumentReference.update({
-        "groups": FieldValue.arrayUnion(["${groupId}_${groupName}"])
+        "groups": FieldValue.arrayUnion(["${groupId}_$groupName"])
       });
       await groupDocumentReference.update({
-        "members": FieldValue.arrayUnion(["${uid}_${userName}"])
+        "members": FieldValue.arrayUnion(["${uid}_$userName"])
       });
     }
   }

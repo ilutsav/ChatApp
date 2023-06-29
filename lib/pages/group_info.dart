@@ -61,8 +61,8 @@ class _GroupInfoState extends State<GroupInfo> {
                     builder: (context) {
                       return AlertDialog(
                         content:
-                            Text("Are you sure you want to exit the group?"),
-                        title: Text("Exit"),
+                            const Text("Are you sure you want to exit the group?"),
+                        title: const Text("Exit"),
                         actions: [
                           IconButton(
                             onPressed: () {
@@ -124,7 +124,7 @@ class _GroupInfoState extends State<GroupInfo> {
                         "Group: ${widget.groupName}",
                         style: const TextStyle(fontWeight: FontWeight.w500),
                       ),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                       Text("Admin : ${getName(widget.adminName)}")
                     ],
                   )
@@ -160,7 +160,7 @@ class _GroupInfoState extends State<GroupInfo> {
                                 getName(snapshot.data['members'][index])
                                     .substring(0, 1)
                                     .toUpperCase(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 15),

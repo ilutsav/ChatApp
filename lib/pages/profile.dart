@@ -50,7 +50,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             ListTile(
               onTap: () {
-                nextScreen(context, HomePage());
+                nextScreen(context, const HomePage());
               },
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
@@ -79,8 +79,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        content: Text("Are you sure you want to logput?"),
-                        title: Text("Logout"),
+                        content: const Text("Are you sure you want to logput?"),
+                        title: const Text("Logout"),
                         actions: [
                           IconButton(
                             onPressed: () {
@@ -139,7 +139,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 Text(
                   widget.userName,
-                  style: TextStyle(fontSize: 17),
+                  style: const TextStyle(fontSize: 17),
                 ),
               ],
             ),
@@ -153,7 +153,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 Text(
                   widget.email,
-                  style: TextStyle(fontSize: 17),
+                  style: const TextStyle(fontSize: 17),
                 ),
               ],
             ),

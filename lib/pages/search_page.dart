@@ -154,13 +154,13 @@ class _SearchPageState extends State<SearchPage> {
     // function to check whether user already exists in group
     joinedOrNot(userName, groupId, groupName, admin);
     return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       leading: CircleAvatar(
         radius: 30,
         backgroundColor: Theme.of(context).primaryColor,
         child: Text(
           groupName.substring(0, 1).toUpperCase(),
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
       ),
       title: Text(

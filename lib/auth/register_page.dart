@@ -47,7 +47,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       const SizedBox(
                         height: 10,
                       ),
-                      Text('Login to see what they are talking about'),
+                      const Text('Login to see what they are talking about'),
                       Image.asset("assets/register.png"),
                       TextFormField(
                         decoration: textInputDecoration.copyWith(
@@ -123,14 +123,14 @@ class _RegisterPageState extends State<RegisterPage> {
                         width: double.infinity,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              primary: Theme.of(context).primaryColor,
+                              backgroundColor: Theme.of(context).primaryColor,
                               elevation: 0,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20))),
                           onPressed: () {
                             register();
                           },
-                          child: Text(
+                          child: const Text(
                             'Register',
                             style: TextStyle(color: Colors.white, fontSize: 16),
                           ),
@@ -139,11 +139,11 @@ class _RegisterPageState extends State<RegisterPage> {
                       const SizedBox(height: 10),
                       Text.rich(TextSpan(
                           text: "Already have an account? ",
-                          style: TextStyle(fontSize: 14),
+                          style: const TextStyle(fontSize: 14),
                           children: <TextSpan>[
                             TextSpan(
                               text: "Login here.",
-                              style: TextStyle(
+                              style: const TextStyle(
                                   decoration: TextDecoration.underline),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {

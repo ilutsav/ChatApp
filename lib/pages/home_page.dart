@@ -6,7 +6,6 @@ import 'package:chatapp_firebase/service/auth_service.dart';
 import 'package:chatapp_firebase/service/database_service.dart';
 import 'package:chatapp_firebase/widgets/group_tile.dart';
 import 'package:chatapp_firebase/widgets/widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -67,7 +66,7 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
               onPressed: () {
-                nextScreen(context, SearchPage());
+                nextScreen(context, const SearchPage());
               },
               icon: const Icon(Icons.search))
         ],
@@ -221,7 +220,7 @@ class _HomePageState extends State<HomePage> {
                               borderRadius: BorderRadius.circular(30),
                             ),
                             errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.red),
+                              borderSide: const BorderSide(color: Colors.red),
                               borderRadius: BorderRadius.circular(30),
                             ),
                             focusedBorder: OutlineInputBorder(
@@ -307,7 +306,7 @@ class _HomePageState extends State<HomePage> {
 
   noGroupWidget() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 25),
+      padding: const EdgeInsets.symmetric(horizontal: 25),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -316,7 +315,7 @@ class _HomePageState extends State<HomePage> {
             onTap: () {
               popUpDialog(context);
             },
-            child: Icon(
+            child: const Icon(
               Icons.add_circle,
               color: Colors.grey,
               size: 75,

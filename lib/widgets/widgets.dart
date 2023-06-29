@@ -26,7 +26,7 @@ void showSnackbar(context, color, messege) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     content: Text(
       messege,
-      style: TextStyle(fontSize: 14),
+      style: const TextStyle(fontSize: 14),
     ),
     backgroundColor: color,
     duration: const Duration(seconds: 2),
